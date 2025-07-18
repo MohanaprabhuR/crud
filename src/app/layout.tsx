@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Next App with Supabase",
+  title: "Student Management Application",
   description: "Curd Application",
 };
 
