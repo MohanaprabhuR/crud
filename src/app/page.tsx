@@ -1,103 +1,247 @@
-import Image from "next/image";
+"use client";
+import { useEffect, useState, FormEvent } from "react";
+import { supabase } from "../../lib/supabase";
+import toast, { Toaster } from "react-hot-toast";
+import Swal from "sweetalert2";
+import "sweetalert2/dist/sweetalert2.min.css";
+
+interface Student {
+  id?: string;
+  name: string;
+  email: string;
+  phone_number: string;
+  gender: string;
+}
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [students, setStudents] = useState<Student[]>([]);
+  const [form, setForm] = useState<Student>({
+    name: "",
+    email: "",
+    phone_number: "",
+    gender: "Male",
+  });
+  const [editId, setEditID] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  useEffect(() => {
+    fetchStudent();
+  }, []);
+
+  async function handleFormSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^[0-9]{10}$/;
+    const { email, phone_number } = form;
+
+    if (!form.name.trim() || !form.email.trim() || !form.phone_number.trim()) {
+      toast.error("Please fill in all required fields.");
+      return;
+    }
+
+    if (!emailRegex.test(email)) {
+      toast.error("Enter a valid email address.");
+      return;
+    }
+
+    if (!phoneRegex.test(phone_number)) {
+      toast.error("Enter a valid 10-digit mobile number.");
+      return;
+    }
+
+    if (editId) {
+      const { error } = await supabase
+        .from("students")
+        .update([form])
+        .eq("id", editId);
+
+      if (error) {
+        toast.error(`Failed to update student table: ${error.message}`);
+      } else {
+        toast.success("Student data updated");
+      }
+      setEditID(null);
+    } else {
+      const { error } = await supabase.from("students").insert([form]);
+      if (error) {
+        toast.error(`Failed to create: ${error.message}`);
+      } else {
+        toast.success("Student added successfully");
+      }
+    }
+
+    setForm({
+      name: "",
+      email: "",
+      phone_number: "",
+      gender: "Male",
+    });
+    fetchStudent();
+  }
+
+  async function fetchStudent() {
+    setLoading(true);
+    const { error, data } = await supabase.from("students").select("*");
+    if (error) {
+      toast.error(`Failed to read data: ${error.message}`);
+    } else {
+      setStudents(data || []);
+    }
+    setLoading(false);
+  }
+
+  function handleStudentEdit(student: Student) {
+    setForm(student);
+    if (student.id) {
+      setEditID(student.id);
+    }
+  }
+
+  async function handleStudentDelete(id: string) {
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    });
+    if (result.isConfirmed) {
+      const { error } = await supabase.from("students").delete().eq("id", id);
+      if (error) {
+        toast.error(`Failed to delete student: ${error.message}`);
+      } else {
+        toast.success("Student deleted successfully");
+        fetchStudent();
+      }
+    }
+  }
+
+  return (
+    <div className="py-28">
+      <Toaster />
+      <div className="mx-auto w-full max-w-[1142px] px-4 max-xl:max-w-[960px] max-lg:max-w-[720px] max-md:max-w-[540px] max-sm:max-w-full max-sm:px-0">
+        <h1 className="text-center pb-10 font-area text-[40px] font-bold text-gray-900 max-lg:text-[32px] max-sm:text-[26px]">
+          Student Management
+        </h1>
+        <div className="flex gap-[0_20px]">
+          <div className="w-[40%]">
+            <form
+              onSubmit={handleFormSubmit}
+              className="bg-white shadow-xl rounded-[24px] px-8 pt-6 pb-8 mb-4"
+            >
+              <div className="mb-3">
+                <label className="block text-gray-700 text-sm font-bold mb-2">
+                  Name
+                </label>
+                <input
+                  type="text"
+                  className="shadow rounded w-full py-2 px-3 text-gray-700"
+                  value={form.name}
+                  onChange={(e) => setForm({ ...form, name: e.target.value })}
+                />
+              </div>
+              <div className="mb-3">
+                <label className="block text-gray-700 text-sm font-bold mb-2">
+                  Email
+                </label>
+                <input
+                  type="text"
+                  className="shadow rounded w-full py-2 px-3 text-gray-700"
+                  value={form.email}
+                  onChange={(e) => setForm({ ...form, email: e.target.value })}
+                />
+              </div>
+              <div className="mb-3">
+                <label className="block text-gray-700 text-sm font-bold mb-2">
+                  Mobile Number
+                </label>
+                <input
+                  type="text"
+                  className="shadow rounded w-full py-2 px-3 text-gray-700"
+                  value={form.phone_number}
+                  onChange={(e) =>
+                    setForm({ ...form, phone_number: e.target.value })
+                  }
+                />
+              </div>
+              <div className="mb-3">
+                <label className="block text-gray-700 text-sm font-bold mb-2">
+                  Gender
+                </label>
+                <select
+                  className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm"
+                  value={form.gender}
+                  onChange={(e) => setForm({ ...form, gender: e.target.value })}
+                >
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <button
+                className={`w-full text-white mt-4 font-medium rounded-lg text-sm px-5 py-2.5 ${
+                  editId
+                    ? "bg-green-700 hover:bg-green-800"
+                    : "bg-blue-700 hover:bg-blue-800"
+                }`}
+              >
+                {editId ? "Update" : "Add"}
+              </button>
+            </form>
+          </div>
+
+          <div className="w-[60%]">
+            {loading ? (
+              <div className="flex justify-center items-center h-64">
+                <div className="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+              </div>
+            ) : (
+              <table className="table-auto w-full text-sm text-left text-gray-500">
+                <thead className="text-xs text-gray-700 uppercase bg-gray-50">
+                  <tr>
+                    <th className="px-6 py-3">Name</th>
+                    <th className="px-6 py-3">Email</th>
+                    <th className="px-6 py-3">Phone Number</th>
+                    <th className="px-6 py-3">Gender</th>
+                    <th className="px-6 py-3">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {students.map((student, index) => (
+                    <tr
+                      key={student.id || index}
+                      className="bg-white border-b border-gray-200"
+                    >
+                      <td className="px-6 py-4">{student.name}</td>
+                      <td className="px-6 py-4">{student.email}</td>
+                      <td className="px-6 py-4">{student.phone_number}</td>
+                      <td className="px-6 py-4">{student.gender}</td>
+                      <td className="px-6 py-4 flex">
+                        <button
+                          className="bg-green-700 hover:bg-green-800 text-white font-medium rounded-lg text-sm px-4 py-2 mr-2"
+                          onClick={() => handleStudentEdit(student)}
+                        >
+                          Edit
+                        </button>
+                        <button
+                          className="bg-red-700 hover:bg-red-800 text-white font-medium rounded-lg text-sm px-4 py-2"
+                          onClick={() =>
+                            student.id && handleStudentDelete(student.id)
+                          }
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </div>
     </div>
   );
 }
