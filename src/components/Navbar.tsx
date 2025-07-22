@@ -1,0 +1,65 @@
+"use client";
+import Link from "next/link";
+import React from "react";
+import { myAppHook } from "@/context/AppUtils";
+import { supabase } from "../../lib/supabase";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
+
+const Navbar = () => {
+  const { isLoggedIn, setIsLoggedIn, setAuthToken } = myAppHook();
+
+  const router = useRouter();
+
+  const handleUserLogout = async () => {
+    localStorage.removeItem("access_token");
+    setIsLoggedIn(false);
+    setAuthToken(null);
+    await supabase.auth.signOut();
+    toast.success("User logged out successfully");
+    router.push("/auth/login");
+  };
+  return (
+    <div>
+      <nav className="navbar flex justify-between bg-[#343a40] py-6">
+        <Link className="navbar-brand text-bold text-white" href="/">
+          SupaNext
+        </Link>
+
+        {isLoggedIn ? (
+          <div className="flex">
+            <Link
+              className=" text-white text-decoration-none"
+              href="/auth/dashboard"
+            >
+              Dashboard
+            </Link>
+            <Link
+              className=" text-white text-decoration-none"
+              href="/auth/profile"
+            >
+              Profile
+            </Link>
+            <button className="btn btn-danger" onClick={handleUserLogout}>
+              Logout
+            </button>
+          </div>
+        ) : (
+          <div className="flex ">
+            <Link className=" text-white text-decoration-none" href="/">
+              Home
+            </Link>
+            <Link
+              className="text-white text-decoration-none"
+              href="/auth/login"
+            >
+              Login
+            </Link>
+          </div>
+        )}
+      </nav>
+    </div>
+  );
+};
+
+export default Navbar;
