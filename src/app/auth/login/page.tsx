@@ -54,12 +54,16 @@ const Login = () => {
   }, [isLoggedIn, router]);
 
   const handleSocialOauth = async (provider: "google" | "github") => {
+    const redirectTo =
+      typeof window !== "undefined" && window.location.hostname === "localhost"
+        ? "http://localhost:3000/auth/callback"
+        : "https://crud-tau-seven.vercel.app/auth/callback";
+
     const { error } = await supabase.auth.signInWithOAuth({
       provider,
-      options: {
-        redirectTo: `${window.location.origin}/auth/dashboard`,
-      },
+      options: { redirectTo },
     });
+
     if (error) {
       toast.error("Failed to login via social OAuth");
     }
