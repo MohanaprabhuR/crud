@@ -6,7 +6,7 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 interface AppUtilsType {
   isLoggedIn: boolean;
   setIsLoggedIn: (state: boolean) => void;
-  setAuthToken: (state: null) => void;
+  setAuthToken: (state: string) => void;
   userProfile: null;
   setUserProfile: (state: null) => void;
   setIsLoading: (state: boolean) => void;

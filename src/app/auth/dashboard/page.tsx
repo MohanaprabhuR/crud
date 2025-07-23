@@ -27,7 +27,8 @@ export default function Dashboard() {
   });
   const [editId, setEditID] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
-  const [userId, setUSerId] = useState<null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [userId, setUSerId] = useState<string | null>(null);
   const { setAuthToken, setIsLoggedIn, isLoggedIn, setUserProfile } =
     myAppHook();
 
@@ -71,6 +72,7 @@ export default function Dashboard() {
       router.push("/auth/login");
       return;
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

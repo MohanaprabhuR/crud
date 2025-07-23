@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { supabase } from "../../../../lib/supabase";
@@ -9,7 +9,6 @@ import { useRouter } from "next/navigation";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { register } from "module";
 
 const formSchema = yup.object().shape({
   email: yup.string().required("Email is Required").email("Invaild Email"),
@@ -24,6 +23,7 @@ const Login = () => {
   const {
     register,
     handleSubmit,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     formState: { isSubmitting, errors },
   } = useForm({
     resolver: yupResolver(formSchema),
@@ -31,6 +31,7 @@ const Login = () => {
 
   useEffect(() => {
     const checkSession = async () => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { data, error } = await supabase.auth.getSession();
       if (data?.session?.user) {
         router.push("/auth/dashboard");
@@ -44,9 +45,10 @@ const Login = () => {
     if (isLoggedIn) {
       router.push("/auth/dashboard");
     }
-  }, [isLoggedIn]);
+  }, [isLoggedIn, router]);
 
   const handleSocialOauth = async (provider: "google" | "github") => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider,
       options: {
