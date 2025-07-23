@@ -37,6 +37,7 @@ const Register = () => {
   const {
     register,
     handleSubmit,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     formState: { errors },
   } = useForm({
     resolver: yupResolver(formSchema),

@@ -30,6 +30,7 @@ const Login = () => {
   const {
     register,
     handleSubmit,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     formState: { isSubmitting, errors },
   } = useForm<LoginFormData>({
     resolver: yupResolver(formSchema),
