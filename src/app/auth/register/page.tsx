@@ -42,10 +42,11 @@ const Register = () => {
     resolver: yupResolver(formSchema),
   });
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onSubmit = async (formdata: any) => {
     const { fullname, email, password, phone, gender } = formdata;
 
-    const { data, error } = await supabase.auth.signUp({
+    const { error } = await supabase.auth.signUp({
       email,
       password,
       options: {

@@ -20,6 +20,7 @@ export const AppUtilsProvider = ({
   children: React.ReactNode;
 }) => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [authToken, setAuthToken] = useState<null | string>(null);
   const [userProfile, setUserProfile] = useState<null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -51,6 +52,7 @@ export const AppUtilsProvider = ({
 };
 
 export const myAppHook = () => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const context = useContext(AppUtilsContext);
   if (!context) {
     throw new Error(

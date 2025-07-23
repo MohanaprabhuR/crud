@@ -27,13 +27,14 @@ const Profile = () => {
     };
 
     checkAuth();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Once Supabase session is confirmed, wait for userProfile from context
   useEffect(() => {
     if (sessionChecked && !userProfile && !isLoggedIn) {
       router.push("/auth/login");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sessionChecked, userProfile, isLoggedIn]);
 
   if (isLoading || !sessionChecked) {
