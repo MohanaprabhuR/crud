@@ -54,10 +54,15 @@ const Login = () => {
   }, [isLoggedIn, router]);
 
   const handleSocialOauth = async (provider: "google" | "github") => {
+    const isLocalhost =
+      typeof window !== "undefined" && window.location.hostname === "localhost";
+    const redirectTo = isLocalhost
+      ? "http://localhost:3000/auth/dashboard"
+      : "https://crud-tau-seven.vercel.app/auth/dashboard";
     const { error } = await supabase.auth.signInWithOAuth({
       provider,
       options: {
-        redirectTo: `${window.location.origin}/auth/dashboard`,
+        redirectTo,
       },
     });
     if (error) {
