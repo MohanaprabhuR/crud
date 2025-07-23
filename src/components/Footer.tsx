@@ -3,8 +3,8 @@ import React from "react";
 const Footer = () => {
   return (
     <div>
-      <footer className="text-center py-3 mt-5 bg-[#343a40] text-white">
-        <p className="mb-0">
+      <footer className=" py-4 bg-[#343a40] ">
+        <p className="text-base text-center leading-6 tracking-[-0.064px] text-white font-normal">
           &copy;{new Date().getFullYear()} SupaNext. All Rights Reserved.
         </p>
       </footer>

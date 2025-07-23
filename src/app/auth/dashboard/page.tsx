@@ -171,127 +171,133 @@ export default function Dashboard() {
     <div className="">
       <Navbar />
       <Toaster />
-      <div className="mx-auto w-full max-w-[1142px] px-4 max-xl:max-w-[960px] max-lg:max-w-[720px] max-md:max-w-[540px] max-sm:max-w-full max-sm:px-0">
-        <h1 className="text-center pb-10 font-area text-[40px] font-bold text-gray-900 max-lg:text-[32px] max-sm:text-[26px]">
-          Student Management
-        </h1>
-        <div className="flex gap-[0_20px]">
-          <div className="w-[40%]">
-            <form
-              onSubmit={handleFormSubmit}
-              className="bg-white shadow-xl rounded-[24px] px-8 pt-6 pb-8 mb-4"
-            >
-              <div className="mb-3">
-                <label className="block text-gray-700 text-sm font-bold mb-2">
-                  Name
-                </label>
-                <input
-                  type="text"
-                  className="shadow rounded w-full py-2 px-3 text-gray-700"
-                  value={form.name}
-                  onChange={(e) => setForm({ ...form, name: e.target.value })}
-                />
-              </div>
-              <div className="mb-3">
-                <label className="block text-gray-700 text-sm font-bold mb-2">
-                  Email
-                </label>
-                <input
-                  type="text"
-                  className="shadow rounded w-full py-2 px-3 text-gray-700"
-                  value={form.email}
-                  onChange={(e) => setForm({ ...form, email: e.target.value })}
-                />
-              </div>
-              <div className="mb-3">
-                <label className="block text-gray-700 text-sm font-bold mb-2">
-                  Mobile Number
-                </label>
-                <input
-                  type="text"
-                  className="shadow rounded w-full py-2 px-3 text-gray-700"
-                  value={form.phone_number}
-                  onChange={(e) =>
-                    setForm({ ...form, phone_number: e.target.value })
-                  }
-                />
-              </div>
-              <div className="mb-3">
-                <label className="block text-gray-700 text-sm font-bold mb-2">
-                  Gender
-                </label>
-                <select
-                  className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm"
-                  value={form.gender}
-                  onChange={(e) => setForm({ ...form, gender: e.target.value })}
-                >
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                  <option value="other">Other</option>
-                </select>
-              </div>
-              <button
-                className={`w-full text-white mt-4 font-medium rounded-lg text-sm px-5 py-2.5 ${
-                  editId
-                    ? "bg-green-700 hover:bg-green-800"
-                    : "bg-blue-700 hover:bg-blue-800"
-                }`}
+      <section className="py-[120px]">
+        <div className="mx-auto w-full max-w-[1142px] px-4 max-xl:max-w-[960px] max-lg:max-w-[720px] max-md:max-w-[540px] max-sm:max-w-full max-sm:px-0">
+          <h1 className="text-center pb-10 font-area text-[40px] font-bold text-gray-900 max-lg:text-[32px] max-sm:text-[26px]">
+            Student Management
+          </h1>
+          <div className="flex gap-[0_20px]">
+            <div className="w-[40%]">
+              <form
+                onSubmit={handleFormSubmit}
+                className="bg-white shadow-xl rounded-[24px] px-8 pt-6 pb-8 mb-4"
               >
-                {editId ? "Update" : "Add"}
-              </button>
-            </form>
-          </div>
+                <div className="mb-3">
+                  <label className="block text-gray-700 text-sm font-bold mb-2">
+                    Name
+                  </label>
+                  <input
+                    type="text"
+                    className="shadow rounded w-full py-2 px-3 text-gray-700"
+                    value={form.name}
+                    onChange={(e) => setForm({ ...form, name: e.target.value })}
+                  />
+                </div>
+                <div className="mb-3">
+                  <label className="block text-gray-700 text-sm font-bold mb-2">
+                    Email
+                  </label>
+                  <input
+                    type="text"
+                    className="shadow rounded w-full py-2 px-3 text-gray-700"
+                    value={form.email}
+                    onChange={(e) =>
+                      setForm({ ...form, email: e.target.value })
+                    }
+                  />
+                </div>
+                <div className="mb-3">
+                  <label className="block text-gray-700 text-sm font-bold mb-2">
+                    Mobile Number
+                  </label>
+                  <input
+                    type="text"
+                    className="shadow rounded w-full py-2 px-3 text-gray-700"
+                    value={form.phone_number}
+                    onChange={(e) =>
+                      setForm({ ...form, phone_number: e.target.value })
+                    }
+                  />
+                </div>
+                <div className="mb-3">
+                  <label className="block text-gray-700 text-sm font-bold mb-2">
+                    Gender
+                  </label>
+                  <select
+                    className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm"
+                    value={form.gender}
+                    onChange={(e) =>
+                      setForm({ ...form, gender: e.target.value })
+                    }
+                  >
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+                <button
+                  className={`w-full text-white mt-4 font-medium rounded-lg text-sm px-5 py-2.5 ${
+                    editId
+                      ? "bg-green-700 hover:bg-green-800"
+                      : "bg-blue-700 hover:bg-blue-800"
+                  }`}
+                >
+                  {editId ? "Update" : "Add"}
+                </button>
+              </form>
+            </div>
 
-          <div className="w-[60%]">
-            {loading ? (
-              <div className="flex justify-center items-center h-64">
-                <div className="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-              </div>
-            ) : (
-              <table className="table-auto w-full text-sm text-left text-gray-500">
-                <thead className="text-xs text-gray-700 uppercase bg-gray-50">
-                  <tr>
-                    <th className="px-6 py-3">Name</th>
-                    <th className="px-6 py-3">Email</th>
-                    <th className="px-6 py-3">Phone Number</th>
-                    <th className="px-6 py-3">Gender</th>
-                    <th className="px-6 py-3">Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {students.map((student, index) => (
-                    <tr
-                      key={student.id || index}
-                      className="bg-white border-b border-gray-200"
-                    >
-                      <td className="px-6 py-4">{student.name}</td>
-                      <td className="px-6 py-4">{student.email}</td>
-                      <td className="px-6 py-4">{student.phone_number}</td>
-                      <td className="px-6 py-4">{student.gender}</td>
-                      <td className="px-6 py-4 flex">
-                        <button
-                          className="bg-green-700 hover:bg-green-800 text-white font-medium rounded-lg text-sm px-4 py-2 mr-2"
-                          onClick={() => handleStudentEdit(student)}
-                        >
-                          Edit
-                        </button>
-                        <button
-                          className="bg-red-700 hover:bg-red-800 text-white font-medium rounded-lg text-sm px-4 py-2"
-                          onClick={() =>
-                            student.id && handleStudentDelete(student.id)
-                          }
-                        >
-                          Delete
-                        </button>
-                      </td>
+            <div className="w-[60%]">
+              {loading ? (
+                <div className="flex justify-center items-center h-64">
+                  <div className="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+                </div>
+              ) : (
+                <table className="table-auto w-full text-sm text-left text-gray-500">
+                  <thead className="text-xs text-gray-700 uppercase bg-gray-50">
+                    <tr>
+                      <th className="px-6 py-3">Name</th>
+                      <th className="px-6 py-3">Email</th>
+                      <th className="px-6 py-3">Phone Number</th>
+                      <th className="px-6 py-3">Gender</th>
+                      <th className="px-6 py-3">Action</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            )}
+                  </thead>
+                  <tbody>
+                    {students.map((student, index) => (
+                      <tr
+                        key={student.id || index}
+                        className="bg-white border-b border-gray-200"
+                      >
+                        <td className="px-6 py-4">{student.name}</td>
+                        <td className="px-6 py-4">{student.email}</td>
+                        <td className="px-6 py-4">{student.phone_number}</td>
+                        <td className="px-6 py-4">{student.gender}</td>
+                        <td className="px-6 py-4 flex">
+                          <button
+                            className="bg-green-700 hover:bg-green-800 text-white font-medium rounded-lg text-sm px-4 py-2 mr-2"
+                            onClick={() => handleStudentEdit(student)}
+                          >
+                            Edit
+                          </button>
+                          <button
+                            className="bg-red-700 hover:bg-red-800 text-white font-medium rounded-lg text-sm px-4 py-2"
+                            onClick={() =>
+                              student.id && handleStudentDelete(student.id)
+                            }
+                          >
+                            Delete
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
+            </div>
           </div>
         </div>
-      </div>
+      </section>
       <Footer />
     </div>
   );

@@ -68,82 +68,122 @@ const Register = () => {
   return (
     <div>
       <Navbar />
-      <div className="container mt-5">
-        <h2 className="text-center">Register</h2>
-        <form onSubmit={handleSubmit(onSubmit)} className="w-50 mx-auto mt-3">
-          <div className="row mb-3">
-            <div className="col-md-6">
-              <label className="form-label">Full Name</label>
-              <input
-                type="text"
-                className="form-control border"
-                {...register("fullname")}
-              />
-              <p className="text-danger">{errors.fullname?.message}</p>
-            </div>
-            <div className="col-md-6">
-              <label className="form-label">Email</label>
-              <input
-                type="email"
-                className="form-control border"
-                {...register("email")}
-              />
-              <p className="text-danger">{errors.email?.message}</p>
-            </div>
-          </div>
-
-          <div className="row mb-3">
-            <div className="col-md-6">
-              <label className="form-label">Phone</label>
-              <input
-                type="text"
-                className="form-control border"
-                {...register("phone")}
-              />
-              <p className="text-danger">{errors.phone?.message}</p>
-            </div>
-            <div className="col-md-6">
-              <label className="form-label">Gender</label>
-              <select className="form-control border" {...register("gender")}>
-                <option value="">Select Gender</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-                <option value="Other">Other</option>
-              </select>
-              <p className="text-danger">{errors.gender?.message}</p>
-            </div>
-          </div>
-
-          <div className="row mb-3">
-            <div className="col-md-6">
-              <label className="form-label">Password</label>
-              <input
-                type="password"
-                className="form-control border"
-                {...register("password")}
-              />
-              <p className="text-danger">{errors.password?.message}</p>
-            </div>
-            <div className="col-md-6">
-              <label className="form-label">Confirm Password</label>
-              <input
-                type="password"
-                className="form-control border"
-                {...register("confirm_password")}
-              />
-              <p className="text-danger">{errors.confirm_password?.message}</p>
-            </div>
-          </div>
-
-          <button type="submit" className="btn btn-primary w-100">
+      <section className="py-[120px]">
+        <div className="w-[30%] mx-auto">
+          <h2 className="text-center text-[40px] leading-[112%] tracking-[-1.4px] text-gray-900 font-bold pb-10">
             Register
-          </button>
-        </form>
+          </h2>
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="w-full mx-auto mt-3 bg-white shadow-2xl rounded-[24px] px-8 pt-6 pb-8 mb-4"
+          >
+            <div className="row mb-3">
+              <div className="pb-3">
+                <label className="form-label block text-gray-700 text-sm font-bold mb-2">
+                  Full Name
+                </label>
+                <input
+                  type="text"
+                  className="shadow rounded w-full py-2 px-3 text-gray-700"
+                  {...register("fullname")}
+                />
+                <p className="font-normal tex-xs pt-2 text-red-600">
+                  {errors.fullname?.message}
+                </p>
+              </div>
+              <div className="pb-3">
+                <label className="form-label block text-gray-700 text-sm font-bold mb-2">
+                  Email
+                </label>
+                <input
+                  type="email"
+                  className="shadow rounded w-full py-2 px-3 text-gray-700"
+                  {...register("email")}
+                />
+                <p className="font-normal tex-xs pt-2 text-red-600">
+                  {errors.email?.message}
+                </p>
+              </div>
+            </div>
 
-        <p className="text-center mt-3">
-          Already have an account? <a href="/auth/login">Login</a>
-        </p>
-      </div>
+            <div className="row mb-3">
+              <div className="pb-3">
+                <label className="form-label block text-gray-700 text-sm font-bold mb-2">
+                  Phone
+                </label>
+                <input
+                  type="text"
+                  className="shadow rounded w-full py-2 px-3 text-gray-700"
+                  {...register("phone")}
+                />
+                <p className="font-normal tex-xs pt-2 text-red-600">
+                  {errors.phone?.message}
+                </p>
+              </div>
+              <div className="pb-3">
+                <label className="form-label block text-gray-700 text-sm font-bold mb-2">
+                  Gender
+                </label>
+                <select
+                  className="shadow rounded w-full py-2 px-3 text-gray-700"
+                  {...register("gender")}
+                >
+                  <option value="">Select Gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Other</option>
+                </select>
+                <p className="font-normal tex-xs pt-2 text-red-600">
+                  {errors.gender?.message}
+                </p>
+              </div>
+            </div>
+
+            <div className="row mb-3">
+              <div className="pb-3">
+                <label className="form-label block text-gray-700 text-sm font-bold mb-2">
+                  Password
+                </label>
+                <input
+                  type="password"
+                  className="shadow rounded w-full py-2 px-3 text-gray-700"
+                  {...register("password")}
+                />
+                <p className="font-normal tex-xs pt-2 text-red-600">
+                  {errors.password?.message}
+                </p>
+              </div>
+              <div className="pb-3">
+                <label className="form-label block text-gray-700 text-sm font-bold mb-2">
+                  Confirm Password
+                </label>
+                <input
+                  type="password"
+                  className="shadow rounded w-full py-2 px-3 text-gray-700"
+                  {...register("confirm_password")}
+                />
+                <p className="font-normal tex-xs pt-2 text-red-600">
+                  {errors.confirm_password?.message}
+                </p>
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              className="w-full text-white mt-4 font-medium rounded-lg text-sm px-5 py-2.5 bg-blue-700 hover:bg-blue-800"
+            >
+              Register
+            </button>
+          </form>
+
+          <p className="text-center mt-6 font-normal text-base">
+            Already have an account?{" "}
+            <a href="/auth/login" className="underline font-bold text-blue-700">
+              Login
+            </a>
+          </p>
+        </div>
+      </section>
       <Footer />
     </div>
   );

@@ -21,36 +21,45 @@ const Navbar = () => {
   };
   return (
     <div>
-      <nav className="navbar flex justify-between bg-[#343a40] py-6">
-        <Link className="navbar-brand text-bold text-white" href="/">
+      <nav className="navbar flex justify-between bg-[#343a40] py-6 px-6">
+        <Link
+          className="text-white text-decoration-none text-lg font-bold hover:scale-105 transition-all ease-in delay-100"
+          href="/"
+        >
           SupaNext
         </Link>
 
         {isLoggedIn ? (
-          <div className="flex">
+          <div className="flex gap-[0_16px]">
             <Link
-              className=" text-white text-decoration-none"
+              className=" text-white text-decoration-none text-lg font-semibold hover:scale-105 transition-all ease-in delay-100 "
               href="/auth/dashboard"
             >
               Dashboard
             </Link>
             <Link
-              className=" text-white text-decoration-none"
+              className=" text-white text-decoration-none text-lg font-semibold hover:scale-105 transition-all ease-in delay-100"
               href="/auth/profile"
             >
               Profile
             </Link>
-            <button className="btn btn-danger" onClick={handleUserLogout}>
+            <button
+              className="text-red-700 text-decoration-none text-lg font-semibold hover:scale-105 transition-all ease-in delay-100"
+              onClick={handleUserLogout}
+            >
               Logout
             </button>
           </div>
         ) : (
-          <div className="flex ">
-            <Link className=" text-white text-decoration-none" href="/">
+          <div className="flex gap-[0_16px]">
+            <Link
+              className=" text-white text-decoration-none text-lg font-semibold hover:scale-105 transition-all ease-in delay-100"
+              href="/"
+            >
               Home
             </Link>
             <Link
-              className="text-white text-decoration-none"
+              className="text-white text-decoration-none text-lg font-semibold hover:scale-105 transition-all ease-in delay-100"
               href="/auth/login"
             >
               Login

@@ -249,39 +249,57 @@
 import React from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import Link from "next/link";
 
 const Home = () => {
   return (
     <div>
       <Navbar />
 
-      <div className=" text-center py-5">
-        <header className="mb-5">
-          <h1 className="display-4 fw-bold">Welcome to SupaNext</h1>
-          <p className="lead">
-            A powerful Next.js application with Supabase integration
-          </p>
-          <button className="btn btn-primary btn-lg">Get Started</button>
+      <div className=" text-center py-12">
+        <header className="">
+          <div className="mx-auto w-full max-w-[1142px] px-4 max-xl:max-w-[960px] max-lg:max-w-[720px] max-md:max-w-[540px] max-sm:max-w-full">
+            <h1 className=" text-[40px] leading-[112%] tracking-[-1.4px] text-gray-900 font-bold   ">
+              Welcome to SupaNext
+            </h1>
+            <p className="pt-4 pb-10 mx-auto  text-2xl leading-[30px] tracking-[-0.096px] text-gray-800">
+              A powerful Next.js application with Supabase integration
+            </p>
+            <Link
+              href={"/auth/login"}
+              className=" mx-auto rounded-[72px] bg-[#374ea2] px-4 py-2.5  text-[15px] leading-[100%] tracking-[-0.075px] text-white shadow-3xl transition-all delay-200 duration-200 ease-in-out font-medium hover:scale-[1.02] "
+            >
+              Get Started
+            </Link>
+          </div>
         </header>
 
-        <section className="row g-4">
-          <div className="col-md-4">
-            <h5 className="card-title">Fast & Secure</h5>
-            <p className="card-text">
-              Built with Next.js and Supabase for speed and security.
-            </p>
-          </div>
-          <div className="col-md-4">
-            <h5 className="card-title">Authentication</h5>
-            <p className="card-text">
-              Seamless user authentication with Google, GitHub, and more.
-            </p>
-          </div>
-          <div className="col-md-4">
-            <h5 className="card-title">Database & Storage</h5>
-            <p className="card-text">
-              Manage data effortlessly with Supabases PostgreSQL and storage.
-            </p>
+        <section className="pt-24">
+          <div className="flex gap-[0_16px] mx-auto w-full max-w-[1142px] px-4 max-xl:max-w-[960px] max-lg:max-w-[720px] max-md:max-w-[540px] max-sm:max-w-full">
+            <div className="w-1/3 rounded-2xl border border-solid border-[#E9ECF7] bg-white px-8 pb-8 pt-10">
+              <h5 className="pb-4  text-2xl leading-6 tracking-[-0.288px] text-gray-900 font-bold">
+                Fast & Secure
+              </h5>
+              <p className=" text-lg leading-7 tracking-[-0.072px] text-[#545A69] font-normal">
+                Built with Next.js and Supabase for speed and security.
+              </p>
+            </div>
+            <div className="w-1/3 rounded-2xl border border-solid border-[#E9ECF7] bg-white px-8 pb-8 pt-10">
+              <h5 className="pb-4 text-2xl leading-6 tracking-[-0.288px] text-gray-900 font-bold">
+                Authentication
+              </h5>
+              <p className=" text-lg leading-7 tracking-[-0.072px] text-[#545A69] font-normal">
+                Seamless user authentication with Google, GitHub, and more.
+              </p>
+            </div>
+            <div className="w-1/3 rounded-2xl border border-solid border-[#E9ECF7] bg-white px-8 pb-8 pt-10">
+              <h5 className="pb-4 text-2xl leading-6 tracking-[-0.288px] text-gray-900 font-bold">
+                Database & Storage
+              </h5>
+              <p className=" text-lg leading-7 tracking-[-0.072px] text-[#545A69] font-normal">
+                Manage data effortlessly with Supabases PostgreSQL and storage.
+              </p>
+            </div>
           </div>
         </section>
       </div>

@@ -80,53 +80,77 @@ const Login = () => {
   return (
     <div>
       <Navbar />
-      <div className="mt-5">
-        <h2 className="text-center">Login</h2>
-        <form className="w-50 mx-auto mt-3" onSubmit={handleSubmit(onSubmit)}>
-          <div className="mb-3">
-            <label className="form-label">Email</label>
-            <input
-              type="email"
-              className="form-control border"
-              {...register("email")}
-            />
-            <p className="text-danger">{errors.email?.message}</p>
-          </div>
-
-          <div className="mb-3">
-            <label className="form-label">Password</label>
-            <input
-              type="password"
-              className="form-control border"
-              {...register("password")}
-            />
-            <p className="text-danger">{errors.password?.message}</p>
-          </div>
-
-          <button type="submit" className="btn btn-primary w-100">
+      <section className="py-[120px]">
+        <div className="w-[30%] mx-auto">
+          <h2 className="text-center text-[40px] leading-[112%] tracking-[-1.4px] text-gray-900 font-bold pb-10">
             Login
-          </button>
-        </form>
+          </h2>
+          <form
+            className="w-full mx-auto mt-3 bg-white shadow-2xl rounded-[24px] px-8 pt-6 pb-8 mb-4"
+            onSubmit={handleSubmit(onSubmit)}
+          >
+            <div className="mb-3">
+              <label className="form-label block text-gray-700 text-sm font-bold mb-2">
+                Email
+              </label>
+              <input
+                type="email"
+                className="shadow rounded w-full py-2 px-3 text-gray-700"
+                {...register("email")}
+              />
+              <p className="font-normal tex-xs pt-2 text-red-600">
+                {errors.email?.message}
+              </p>
+            </div>
 
-        <div className="text-center mt-3">
-          <button
-            className="btn btn-danger mx-2"
-            onClick={() => handleSocialOauth("google")}
-          >
-            Google
-          </button>
-          <button
-            className="btn btn-dark mx-2"
-            onClick={() => handleSocialOauth("github")}
-          >
-            GitHub
-          </button>
+            <div className="mb-3">
+              <label className="form-label block text-gray-700 text-sm font-bold mb-2">
+                Password
+              </label>
+              <input
+                type="password"
+                className="shadow rounded w-full py-2 px-3 text-gray-700"
+                {...register("password")}
+              />
+              <p className="font-normal tex-xs pt-2 text-red-600">
+                {errors.password?.message}
+              </p>
+            </div>
+
+            <button
+              type="submit"
+              className="w-full text-white mt-4 font-medium rounded-lg text-sm px-5 py-2.5 bg-blue-700 hover:bg-blue-800"
+            >
+              Login
+            </button>
+          </form>
+
+          <div className="text-center mt-3 flex flex-col gap-[24px_0]">
+            <button
+              className=" rounded font-bold w-auto text-blue-700  bg-[white] p-4 shadow-[0px_0px_1px_0px_rgba(38,50,56,0.30),0px_1px_2px_0px_rgba(38,50,56,0.06)]"
+              onClick={() => handleSocialOauth("google")}
+            >
+              Google
+            </button>
+            <button
+              className="rounded font-bold  w-auto text-gray-700  bg-[white] p-4 shadow-[0px_0px_1px_0px_rgba(38,50,56,0.30),0px_1px_2px_0px_rgba(38,50,56,0.06)]"
+              onClick={() => handleSocialOauth("github")}
+            >
+              GitHub
+            </button>
+          </div>
+
+          <p className="text-center mt-6 font-normal text-base">
+            Don&apos;t have an account?{" "}
+            <a
+              href="/auth/register"
+              className="underline font-bold text-blue-700"
+            >
+              Register
+            </a>
+          </p>
         </div>
-
-        <p className="text-center mt-3">
-          Don&apos;t have an account? <a href="/auth/register">Register</a>
-        </p>
-      </div>
+      </section>
       <Footer />
     </div>
   );
