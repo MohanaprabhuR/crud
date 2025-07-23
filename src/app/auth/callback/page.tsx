@@ -20,5 +20,5 @@ export default function AuthCallback() {
     checkSession();
   }, [router]);
 
-  return <p className="text-center mt-16">Signing in, please wait...</p>;
+  return <p className="text-center mt-16">Signing in, please wait</p>;
 }
