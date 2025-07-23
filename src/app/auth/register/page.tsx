@@ -42,6 +42,13 @@ const Register = () => {
     resolver: yupResolver(formSchema),
   });
 
+  const onError = (errors: Record<string, any>) => {
+    const firstError = Object.values(errors)[0];
+    if (firstError?.message) {
+      toast.error(firstError.message);
+    }
+  };
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onSubmit = async (formdata: any) => {
     const { fullname, email, password, phone, gender } = formdata;
@@ -75,7 +82,7 @@ const Register = () => {
             Register
           </h2>
           <form
-            onSubmit={handleSubmit(onSubmit)}
+            onSubmit={handleSubmit(onSubmit, onError)}
             className="w-full mx-auto mt-3 bg-white shadow-2xl rounded-[24px] px-8 pt-6 pb-8 mb-4"
           >
             <div className="row mb-3">
@@ -88,9 +95,6 @@ const Register = () => {
                   className="shadow rounded w-full py-2 px-3 text-gray-700"
                   {...register("fullname")}
                 />
-                <p className="font-normal tex-xs pt-2 text-red-600">
-                  {errors.fullname?.message}
-                </p>
               </div>
               <div className="pb-3">
                 <label className="form-label block text-gray-700 text-sm font-bold mb-2">
@@ -101,9 +105,6 @@ const Register = () => {
                   className="shadow rounded w-full py-2 px-3 text-gray-700"
                   {...register("email")}
                 />
-                <p className="font-normal tex-xs pt-2 text-red-600">
-                  {errors.email?.message}
-                </p>
               </div>
             </div>
 
@@ -117,9 +118,6 @@ const Register = () => {
                   className="shadow rounded w-full py-2 px-3 text-gray-700"
                   {...register("phone")}
                 />
-                <p className="font-normal tex-xs pt-2 text-red-600">
-                  {errors.phone?.message}
-                </p>
               </div>
               <div className="pb-3">
                 <label className="form-label block text-gray-700 text-sm font-bold mb-2">
@@ -134,9 +132,6 @@ const Register = () => {
                   <option value="Female">Female</option>
                   <option value="Other">Other</option>
                 </select>
-                <p className="font-normal tex-xs pt-2 text-red-600">
-                  {errors.gender?.message}
-                </p>
               </div>
             </div>
 
@@ -150,9 +145,6 @@ const Register = () => {
                   className="shadow rounded w-full py-2 px-3 text-gray-700"
                   {...register("password")}
                 />
-                <p className="font-normal tex-xs pt-2 text-red-600">
-                  {errors.password?.message}
-                </p>
               </div>
               <div className="pb-3">
                 <label className="form-label block text-gray-700 text-sm font-bold mb-2">
@@ -163,9 +155,6 @@ const Register = () => {
                   className="shadow rounded w-full py-2 px-3 text-gray-700"
                   {...register("confirm_password")}
                 />
-                <p className="font-normal tex-xs pt-2 text-red-600">
-                  {errors.confirm_password?.message}
-                </p>
               </div>
             </div>
 

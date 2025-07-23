@@ -35,6 +35,13 @@ const Login = () => {
     resolver: yupResolver(formSchema),
   });
 
+  const onError = (errors: Record<string, any>) => {
+    const firstError = Object.values(errors)[0];
+    if (firstError?.message) {
+      toast.error(firstError.message);
+    }
+  };
+
   // ✅ Check session on mount
   useEffect(() => {
     const checkSession = async () => {
@@ -95,7 +102,7 @@ const Login = () => {
 
           <form
             className="w-full mx-auto mt-3 bg-white shadow-2xl rounded-[24px] px-8 pt-6 pb-8 mb-4"
-            onSubmit={handleSubmit(onSubmit)}
+            onSubmit={handleSubmit(onSubmit, onError)}
           >
             <div className="mb-3">
               <label className="block text-gray-700 text-sm font-bold mb-2">
@@ -106,9 +113,6 @@ const Login = () => {
                 className="shadow rounded w-full py-2 px-3 text-gray-700"
                 {...register("email")}
               />
-              <p className="text-xs pt-2 text-red-600">
-                {errors.email?.message}
-              </p>
             </div>
 
             <div className="mb-3">
@@ -120,9 +124,6 @@ const Login = () => {
                 className="shadow rounded w-full py-2 px-3 text-gray-700"
                 {...register("password")}
               />
-              <p className="text-xs pt-2 text-red-600">
-                {errors.password?.message}
-              </p>
             </div>
 
             <button
